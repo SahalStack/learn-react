@@ -66,7 +66,7 @@ const data = [
     publicationDate: "1965-01-01",
     author: "Frank Herbert",
     genres: ["science fiction", "novel", "adventure"],
-    hasMovieAdaptation: true,
+    hasMovieAdaptation: false,
     pages: 658,
     translations: {
       spanish: "",
@@ -206,7 +206,7 @@ console.log(false || "Some string");
 console.log(true || "hyy");
 
 const spanishTranslation = book.translations.spanish || "Not translated yet";
-console.log(spanishTranslation);
+// console.log(spanishTranslation);
 
 // console.log(book.reviews.librarything.reviewsCount);
 // const count = book.reviews.librarything.reviewsCount || "No data yet";
@@ -222,4 +222,33 @@ function getTotalReviewCount(book) {
   const librarythingReviewCount = book.reviews?.librarything?.reviewsCount ?? 0;
   return goodreadsReviewCount + librarythingReviewCount;
 }
-console.log("total-", getTotalReviewCount(book));
+// console.log("total-", getTotalReviewCount(book));
+
+//array methods- map, filter, reduce
+const allbooks = getBooks();
+//MAP
+console.log([1, 2, 3, 4, 5].map((num) => num * 2));
+
+const titles = allbooks.map((book) => book.title);
+console.log("titles", titles);
+
+const essentialData = allbooks.map((book) => {
+  return { title: book.title, author: book.author, pages: book.pages };
+});
+console.log("essentialData", essentialData);
+
+//FILTER
+const longBooks = allbooks
+  .filter((book) => book.pages > 500)
+  .filter((book) => book.hasMovieAdaptation);
+
+console.log("longbooks", longBooks);
+
+const adventureBooks = allbooks
+  .filter((book) => book.genres.includes("adventure"))
+  .map((book) => book.title);
+console.log("adventureBooks", adventureBooks);
+
+//REDUCE
+const totalPages = allbooks.reduce((total, book) => total + book.pages, 0);
+console.log("totalPages:", totalPages);
